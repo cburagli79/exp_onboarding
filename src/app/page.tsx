@@ -45,13 +45,13 @@ const ONBOARDING_TASKS: Task[] = [
     id: "2.1",
     phaseId: 2,
     phaseName: "Fase 2: Contrato ICA",
-    title: "2.1 Comprender el Modelo 75/25 y el Cap Anual",
+    title: "2.1 Comprender el Modelo 75/25, el Cap Anual y el 5% Post-Cap",
     feynmanConcept:
-      'Tú eres dueño de tu negocio. De cada 100 que cobras, 75 son tuyos y 25 financian la nube de eXp. En cuanto esos 25 suman la cuota tope anual de tu país ("Cap"), eXp ya no retiene nada y te llevas el 100% de tus comisiones.',
+      'Tú eres dueño de tu negocio. De cada 100 que cobras, 75 son tuyos y 25 financian la nube de eXp. En cuanto esos 25 acumulan el tope anual de tu país ("Cap"), ya no te descuentan el 25%: únicamente se aplica un cobro por transacción del 5% por cada cierre subsecuente (te quedas con el 95% neto de la comisión).',
     action:
-      "Abre el borrador de tu contrato ICA (Independent Contractor Agreement) que llega a tu correo y localiza tres números: tu Cap anual, tu cuota mensual de tecnología y el split 75/25.",
+      "Abre el borrador de tu contrato ICA (Independent Contractor Agreement) que llega a tu correo y localiza cuatro datos: tu Cap anual, tu cuota mensual de tecnología, el split 75/25 y el cobro del 5% por transacción post-Cap.",
     feynmanCheck:
-      '¿Puedes explicarle este modelo a un familiar de 10 años en una sola oración sencilla sin trabarte?',
+      '¿Puedes explicarle este modelo a un familiar en una sola oración?: "Gano el 75% hasta alcanzar mi tope anual (Cap); después de eso gano el 95% porque eXp solo cobra el 5% por transacción".',
   },
   {
     id: "2.2",
@@ -70,13 +70,13 @@ const ONBOARDING_TASKS: Task[] = [
     id: "3.1",
     phaseId: 3,
     phaseName: "Fase 3: Activación",
-    title: "3.1 Tu Llave Digital: eXp Passport y Correo Oficial",
+    title: "3.1 Tu Llave Digital: eXp Passport y Correo Oficial por País",
     feynmanConcept:
-      "Es tu documento de identidad digital. Una sola contraseña te abre la oficina virtual, la intranet, las capacitaciones y el correo corporativo en todo el mundo.",
+      "Es tu documento de identidad digital. En eXp CALA, cada país cuenta con su propio dominio oficial de Google Workspace según la filial local (por ejemplo: @expcolombiaci.co en Colombia, @expchile.cl en Chile, @expmexico.mx en México, etc.). Con este correo institucional y tu contraseña de eXp Passport accedes a todas las herramientas del ecosistema.",
     action:
-      "Activa tu cuenta de Google Workspace con tu nuevo correo corporativo (@exprealty.com) y configura la contraseña con verificación en dos pasos en tu teléfono.",
+      "Revisa tu correo personal para ubicar el correo de bienvenida de Onboarding donde viene tu nuevo usuario institucional (con el dominio específico de tu país) y actívalo en Google Workspace configurando la verificación en dos pasos en tu teléfono.",
     feynmanCheck:
-      "Abre una ventana de incógnito en tu navegador e inicia sesión en Gmail con tu usuario @exprealty.com. ¿Entraste a la primera?",
+      "Abre una ventana de incógnito en tu navegador e inicia sesión en Gmail con tu nuevo correo oficial del país (ej. @expcolombiaci.co, @expchile.cl, etc.). ¿Entraste a la primera?",
   },
   {
     id: "3.2",
