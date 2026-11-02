@@ -81,12 +81,12 @@ const ONBOARDING_TASKS: Task[] = [
     phaseName: "Fase 3: Activación",
     title: "3.1 Tu Llave Digital: eXp Passport y Correo de País",
     feynmanConcept:
-      "Es tu documento de identidad digital. En eXp CALA, cada país cuenta con su propio dominio oficial de Google Workspace según la filial local (ej. @expcolombiaci.co en Colombia, @expchile.cl en Chile, @expmexico.mx en México, etc.). Con esta cuenta y tu eXp Passport accedes al ecosistema.",
+      "Es tu documento de identidad digital. En eXp CALA, cada país cuenta con su propio dominio oficial según la filial local (ej. @expcolombiaci.co en Colombia, @expchile.cl en Chile, @expmexico.mx en México, etc.). Con esta cuenta y tu eXp Passport accedes al ecosistema centralizado en Okta.",
     action:
-      "Revisa tu correo personal, ubica la bienvenida de Onboarding donde viene tu usuario institucional local y actívalo configurando la verificación en dos pasos en tu teléfono.",
+      "Revisa tu correo personal, ubica la bienvenida de Onboarding donde viene tu usuario institucional local y actívalo iniciando sesión en Okta configurando la verificación en dos pasos en tu teléfono.",
     feynmanCheck:
-      "Abre una ventana de incógnito en tu navegador e inicia sesión en Gmail con tu nuevo correo oficial del país. ¿Entraste a la primera?",
-    links: [{ url: "https://mail.google.com/", label: "Acceder a Google Workspace" }]
+      "Abre una ventana de incógnito en tu navegador e inicia sesión en Okta con tus credenciales de eXp Passport. ¿Entraste a la primera?",
+    links: [{ url: "https://exprealty.okta.com/", label: "Log in to your Okta org" }]
   },
   {
     id: "3.2",
