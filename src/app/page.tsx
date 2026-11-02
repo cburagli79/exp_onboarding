@@ -45,11 +45,11 @@ const ONBOARDING_TASKS: Task[] = [
     id: "2.1",
     phaseId: 2,
     phaseName: "Fase 2: Contrato ICA",
-    title: "2.1 Comprender el Modelo 80/20 y el Cap Anual",
+    title: "2.1 Comprender el Modelo 75/25 y el Cap Anual",
     feynmanConcept:
-      'Tú eres dueño de tu negocio. De cada 100 que cobras, 80 son tuyos y 20 financian la nube de eXp. En cuanto esos 20 suman la cuota tope anual de tu país ("Cap"), eXp ya no retiene nada y te llevas el 100% de tus comisiones.',
+      'Tú eres dueño de tu negocio. De cada 100 que cobras, 75 son tuyos y 25 financian la nube de eXp. En cuanto esos 25 suman la cuota tope anual de tu país ("Cap"), eXp ya no retiene nada y te llevas el 100% de tus comisiones.',
     action:
-      "Abre el borrador de tu contrato ICA (Independent Contractor Agreement) que llega a tu correo y localiza tres números: tu Cap anual, tu cuota mensual de tecnología y el split 80/20.",
+      "Abre el borrador de tu contrato ICA (Independent Contractor Agreement) que llega a tu correo y localiza tres números: tu Cap anual, tu cuota mensual de tecnología y el split 75/25.",
     feynmanCheck:
       '¿Puedes explicarle este modelo a un familiar de 10 años en una sola oración sencilla sin trabarte?',
   },
@@ -173,7 +173,7 @@ export default function GoldOnboardingGuide() {
               <span className="text-xs text-slate-400 font-medium">by Virginia Restrepo</span>
             </div>
             <h1 className="text-xl sm:text-2xl font-bold tracking-tight text-white mt-0.5">
-              Guía de Onboarding Feynman
+              Guía de Onboarding
             </h1>
             <p className="text-xs text-slate-400">
               Paso a paso para incorporarte a eXp Realty sin tecnicismos ni confusiones.
@@ -305,7 +305,7 @@ export default function GoldOnboardingGuide() {
                       {task.title}
                     </h2>
 
-                    {/* Explicación en lenguaje simple (Método Feynman) */}
+                    {/* Explicación en lenguaje simple */}
                     <div className="mt-3 text-xs sm:text-sm text-slate-300 leading-relaxed bg-slate-950/60 p-3.5 rounded-xl border border-slate-800/80">
                       <span className="text-amber-400 font-bold block mb-1 text-[11px] uppercase tracking-wider">
                         💡 ¿Qué significa esto en simple?
@@ -326,7 +326,7 @@ export default function GoldOnboardingGuide() {
                       <strong className="text-slate-200">Acción:</strong> {task.action}
                     </div>
 
-                    {/* Pregunta de Verificación Feynman */}
+                    {/* Test */}
                     <div
                       className={`mt-4 p-3.5 rounded-xl border text-xs sm:text-sm flex items-start gap-3 transition ${
                         isDone
@@ -337,7 +337,7 @@ export default function GoldOnboardingGuide() {
                       <span className="text-base shrink-0">🎯</span>
                       <div>
                         <span className="font-bold uppercase tracking-wider text-[10px] block mb-0.5">
-                          Prueba de Control Feynman
+                          Test
                         </span>
                         <span>{task.feynmanCheck}</span>
                       </div>
