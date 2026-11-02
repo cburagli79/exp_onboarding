@@ -33,7 +33,6 @@ const ONBOARDING_TASKS: Task[] = [
     feynmanCheck:
       '¿Le enviaste una captura de pantalla a tu sponsor confirmando su nombre en esa casilla antes de hacer clic en "Enviar"?',
     warning: "Si envías sin sponsor o con un error tipográfico, no pertenecerás al equipo de Virginia Restrepo.",
-    links: [{ url: "https://joinapp.exprealty.com/", label: "Abrir eXp Join App" }]
   },
   {
     id: "1.2",
@@ -86,7 +85,7 @@ const ONBOARDING_TASKS: Task[] = [
       "Revisa tu correo personal, ubica la bienvenida de Onboarding donde viene tu usuario institucional local y actívalo iniciando sesión en Okta configurando la verificación en dos pasos en tu teléfono.",
     feynmanCheck:
       "Abre una ventana de incógnito en tu navegador e inicia sesión en Okta con tus credenciales de eXp Passport. ¿Entraste a la primera?",
-    links: [{ url: "https://exprealty.okta.com/", label: "Log in to your Okta org" }]
+    links: [{ url: "https://exprealty.okta.com/", label: "Log in to your Okta org" }],
   },
   {
     id: "3.2",
@@ -113,23 +112,25 @@ const ONBOARDING_TASKS: Task[] = [
       "Ingresa a My eXp 3.0 desde tu panel de aplicaciones Okta/SSO con tu eXp Passport y revisa la sección 'My Dashboard' y el módulo de comisiones.",
     feynmanCheck:
       "¿Pudiste entrar a My eXp 3.0, ubicar el gráfico de tu Cap anual y corroborar que tu nombre y sponsor figuran correctamente?",
-    links: [
-      { url: "https://enterprise.exprealty.com/", label: "Abrir eXp Enterprise (My eXp)" },
-      { url: "https://exprealty.okta.com/", label: "Acceso global vía Okta" }
-    ]
+    links: [{ url: "https://my.exprealty.com/", label: "My eXp" }],
   },
   {
     id: "4.2",
     phaseId: 4,
     phaseName: "Fase 4: Finanzas y Negocio",
-    title: "4.2 Agent Stock Programs: Conviértete en Socio de eXp",
+    title: "4.2 Morgan Stanley at Work: Tu Bóveda de Acciones en Wall Street",
     feynmanConcept:
-      "En lugar de solo recibir dinero en efectivo, eXp te permite comprar acciones de la compañía pública matriz (NASDAQ: EXPI) con un 10% de descuento directo sobre el precio de mercado, usando el 5% de tus comisiones ganadas.",
+      "Es tu cuenta de custodia bursátil oficial en Estados Unidos. Las acciones que compras con descuento o que eXp te premia por metas de ventas se custodian aquí bajo tu propio número de cuenta regulada.",
     action:
-      "Abre el módulo 'Agent Stock Programs' en tu portal de trabajo y confirma tu inscripción al programa de compra de acciones con descuento para tus futuros cierres.",
+      "Accede a Morgan Stanley at Work (Shareworks), completa el registro de seguridad inicial y valida tus datos de identidad para dejar activada tu cuenta de valores.",
     feynmanCheck:
-      "¿Comprendes cómo el 10% de descuento en la compra de acciones EXPI se convierte en ganancia patrimonial instantánea y pudiste verificar tu estado activo en el programa?",
-    links: [{ url: "https://enterprise.exprealty.com/", label: "Activar en eXp Enterprise" }]
+      "¿Iniciaste sesión con éxito en Morgan Stanley at Work y puedes ver tu panel de portafolio patrimonial listo?",
+    links: [
+      {
+        url: "https://shareworks.solium.com/",
+        label: "Morgan Stanley at Work - Login",
+      },
+    ],
   },
 
   // FASE 5: COMUNICACIÓN Y SOPORTE
@@ -144,7 +145,7 @@ const ONBOARDING_TASKS: Task[] = [
       "Abre 'eXp Hub' desde tu lanzador de aplicaciones y agrega a tus marcadores favoritos la sección de noticias y eventos correspondientes a la región CALA.",
     feynmanCheck:
       "¿Localizaste en el Hub la sección de noticias corporativas y el calendario de eventos globales?",
-    links: [{ url: "https://exprealty.okta.com/", label: "Abrir eXp Hub (vía Okta)" }]
+    links: [{ url: "https://exprealty.okta.com/", label: "Abrir eXp Hub (vía Okta)" }],
   },
   {
     id: "5.2",
@@ -157,7 +158,7 @@ const ONBOARDING_TASKS: Task[] = [
       "Ingresa a Zoho Mail con tus credenciales asignadas de país, personaliza tu bandeja de entrada y crea tu firma electrónica con tus teléfonos y logos oficiales.",
     feynmanCheck:
       "¿Te enviaste un correo de prueba a tu cuenta personal desde Zoho Mail y confirmaste que sale con tu firma profesional completa?",
-    links: [{ url: "https://mail.zoho.com/", label: "Acceder a Zoho Mail" }]
+    links: [{ url: "https://mail.zoho.com/", label: "Acceder a Zoho Mail" }],
   },
   {
     id: "5.3",
@@ -170,7 +171,7 @@ const ONBOARDING_TASKS: Task[] = [
       "Entra al portal de Agent Services y familiarízate con las opciones para radicar solicitudes de soporte administrativo, legal y financiero.",
     feynmanCheck:
       "¿Sabes exactamente en qué sección de Agent Services debes ingresar una consulta si necesitas dar seguimiento a una liquidación de comisión?",
-    links: [{ url: "https://support.exprealty.com/", label: "Portal de Soporte eXp" }]
+    links: [{ url: "https://support.exprealty.com/", label: "Portal de Soporte eXp" }],
   },
 
   // FASE 6: CUMPLIMIENTO NORMATIVO Y ÉTICA
@@ -185,7 +186,7 @@ const ONBOARDING_TASKS: Task[] = [
       "Entra a 'Agent Compliance Self Service - Courses', ubica los módulos asignados a tu cuenta de agente y completa el primer curso mandatorio de inducción ética.",
     feynmanCheck:
       "¿Aprobaste tu primer módulo de compliance en la plataforma y comprobaste que el curso figura como completado en tu expediente?",
-    links: [{ url: "https://exprealty.okta.com/", label: "Plataforma de Cursos (Okta)" }]
+    links: [{ url: "https://exprealty.okta.com/", label: "Plataforma de Cursos (Okta)" }],
   },
 ];
 
@@ -428,7 +429,7 @@ export default function GoldOnboardingGuide() {
                       <div className="text-xs sm:text-sm text-slate-300">
                         <strong className="text-slate-200">Acción:</strong> {task.action}
                       </div>
-                      
+
                       {/* Botones de Enlaces */}
                       {task.links && (
                         <div className="mt-3 flex flex-wrap gap-2">
