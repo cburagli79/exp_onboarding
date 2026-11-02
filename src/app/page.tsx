@@ -2,6 +2,11 @@
 
 import React, { useState, useEffect } from "react";
 
+interface LinkItem {
+  url: string;
+  label: string;
+}
+
 interface Task {
   id: string;
   phaseId: number;
@@ -11,6 +16,7 @@ interface Task {
   action: string;
   feynmanCheck: string;
   warning?: string;
+  links?: LinkItem[];
 }
 
 const ONBOARDING_TASKS: Task[] = [
@@ -27,6 +33,7 @@ const ONBOARDING_TASKS: Task[] = [
     feynmanCheck:
       '¿Le enviaste una captura de pantalla a tu sponsor confirmando su nombre en esa casilla antes de hacer clic en "Enviar"?',
     warning: "Si envías sin sponsor o con un error tipográfico, no pertenecerás al equipo de Virginia Restrepo.",
+    links: [{ url: "https://joinapp.exprealty.com/", label: "Abrir eXp Join App" }]
   },
   {
     id: "1.2",
@@ -79,6 +86,7 @@ const ONBOARDING_TASKS: Task[] = [
       "Revisa tu correo personal, ubica la bienvenida de Onboarding donde viene tu usuario institucional local y actívalo configurando la verificación en dos pasos en tu teléfono.",
     feynmanCheck:
       "Abre una ventana de incógnito en tu navegador e inicia sesión en Gmail con tu nuevo correo oficial del país. ¿Entraste a la primera?",
+    links: [{ url: "https://mail.google.com/", label: "Acceder a Google Workspace" }]
   },
   {
     id: "3.2",
@@ -91,6 +99,7 @@ const ONBOARDING_TASKS: Task[] = [
       "Descarga la app Workplace en tu teléfono y computadora. Ingresa con tu eXp Passport y pide acceso a los grupos de tu país y al grupo oficial Organización GOLD by Virginia Restrepo.",
     feynmanCheck:
       '¿Escribiste tu mensaje de presentación en el grupo GOLD diciendo tu nombre, país y quién es tu sponsor?',
+    links: [{ url: "https://exp.workplace.com/", label: "Abrir eXp Workplace" }]
   },
   {
     id: "3.3",
@@ -105,7 +114,7 @@ const ONBOARDING_TASKS: Task[] = [
       "¿Tienes ya escrita en papel una lista con tus primeros 20 contactos y la fecha exacta de tu primera capacitación de ventas?",
   },
 
-  // FASE 4: HERRAMIENTAS DE GESTIÓN Y FINANZAS (PUNTO 1)
+  // FASE 4: HERRAMIENTAS DE GESTIÓN Y FINANZAS
   {
     id: "4.1",
     phaseId: 4,
@@ -117,6 +126,10 @@ const ONBOARDING_TASKS: Task[] = [
       "Ingresa a My eXp 3.0 desde tu panel de aplicaciones Okta/SSO con tu eXp Passport y revisa la sección 'My Dashboard' y el módulo de comisiones.",
     feynmanCheck:
       "¿Pudiste entrar a My eXp 3.0, ubicar el gráfico de tu Cap anual y corroborar que tu nombre y sponsor figuran correctamente?",
+    links: [
+      { url: "https://enterprise.exprealty.com/", label: "Abrir eXp Enterprise (My eXp)" },
+      { url: "https://exprealty.okta.com/", label: "Acceso global vía Okta" }
+    ]
   },
   {
     id: "4.2",
@@ -129,6 +142,7 @@ const ONBOARDING_TASKS: Task[] = [
       "Abre el módulo 'Agent Stock Programs' en tu portal de trabajo y confirma tu inscripción al programa de compra de acciones con descuento para tus futuros cierres.",
     feynmanCheck:
       "¿Comprendes cómo el 10% de descuento en la compra de acciones EXPI se convierte en ganancia patrimonial instantánea y pudiste verificar tu estado activo en el programa?",
+    links: [{ url: "https://enterprise.exprealty.com/", label: "Activar en eXp Enterprise" }]
   },
   {
     id: "4.3",
@@ -141,9 +155,10 @@ const ONBOARDING_TASKS: Task[] = [
       "Accede a Morgan Stanley at Work (Shareworks), completa el registro de seguridad inicial y valida tus datos de identidad para dejar activada tu cuenta de valores.",
     feynmanCheck:
       "¿Iniciaste sesión con éxito en Morgan Stanley at Work y puedes ver tu panel de portafolio patrimonial listo?",
+    links: [{ url: "https://shareworks.solium.com/", label: "Abrir Morgan Stanley (Shareworks)" }]
   },
 
-  // FASE 5: CAMPUS VIRTUAL, COMUNICACIÓN Y SOPORTE (PUNTO 3)
+  // FASE 5: CAMPUS VIRTUAL, COMUNICACIÓN Y SOPORTE
   {
     id: "5.1",
     phaseId: 5,
@@ -155,6 +170,7 @@ const ONBOARDING_TASKS: Task[] = [
       "Descarga la aplicación exp.world en tu computador, personaliza tu avatar y navega hasta el auditorio o el salón de operaciones de tu país.",
     feynmanCheck:
       "¿Ingresaste a exp.world con tu avatar, encendiste tu micrófono y comprobaste que puedes escuchar e interactuar con el personal de soporte?",
+    links: [{ url: "https://exp.world/", label: "Descargar / Entrar a eXp World" }]
   },
   {
     id: "5.2",
@@ -167,6 +183,7 @@ const ONBOARDING_TASKS: Task[] = [
       "Abre 'eXp Hub' desde tu lanzador de aplicaciones y agrega a tus marcadores favoritos la sección de noticias y eventos correspondientes a la región CALA.",
     feynmanCheck:
       "¿Localizaste en el Hub la sección de noticias corporativas y el calendario de eventos globales?",
+    links: [{ url: "https://exprealty.okta.com/", label: "Abrir eXp Hub (vía Okta)" }]
   },
   {
     id: "5.3",
@@ -179,6 +196,7 @@ const ONBOARDING_TASKS: Task[] = [
       "Ingresa a Zoho Mail con tus credenciales asignadas de país, personaliza tu bandeja de entrada y crea tu firma electrónica con tus teléfonos y logos oficiales.",
     feynmanCheck:
       "¿Te enviaste un correo de prueba a tu cuenta personal desde Zoho Mail y confirmaste que sale con tu firma profesional completa?",
+    links: [{ url: "https://mail.zoho.com/", label: "Acceder a Zoho Mail" }]
   },
   {
     id: "5.4",
@@ -191,9 +209,10 @@ const ONBOARDING_TASKS: Task[] = [
       "Entra al portal de Agent Services y familiarízate con las opciones para radicar solicitudes de soporte administrativo, legal y financiero.",
     feynmanCheck:
       "¿Sabes exactamente en qué sección de Agent Services debes ingresar una consulta si necesitas dar seguimiento a una liquidación de comisión?",
+    links: [{ url: "https://support.exprealty.com/", label: "Portal de Soporte eXp" }]
   },
 
-  // FASE 6: FORMACIÓN Y CUMPLIMIENTO NORMATIVO (PUNTO 5)
+  // FASE 6: FORMACIÓN Y CUMPLIMIENTO NORMATIVO
   {
     id: "6.1",
     phaseId: 6,
@@ -205,6 +224,7 @@ const ONBOARDING_TASKS: Task[] = [
       "Accede a eXp University e International Training, revisa la parrilla horaria de clases en español de esta semana y selecciona al menos dos sesiones para tu agenda.",
     feynmanCheck:
       "¿Elegiste y agendaste ya en tu calendario dos capacitaciones comerciales de eXp University para esta semana?",
+    links: [{ url: "https://expuniversity.com/", label: "Acceder a eXp University" }]
   },
   {
     id: "6.2",
@@ -217,6 +237,7 @@ const ONBOARDING_TASKS: Task[] = [
       "Entra a 'Agent Compliance Self Service - Courses', ubica los módulos asignados a tu cuenta de agente y completa el primer curso mandatorio de inducción ética.",
     feynmanCheck:
       "¿Aprobaste tu primer módulo de compliance en la plataforma y comprobaste que el curso figura como completado en tu expediente?",
+    links: [{ url: "https://exprealty.okta.com/", label: "Plataforma de Cursos (Okta)" }]
   },
 ];
 
@@ -454,9 +475,31 @@ export default function GoldOnboardingGuide() {
                       </div>
                     )}
 
-                    {/* Acción requerida */}
-                    <div className="mt-3 text-xs sm:text-sm text-slate-300">
-                      <strong className="text-slate-200">Acción:</strong> {task.action}
+                    {/* Acción requerida y Botones de URL */}
+                    <div className="mt-4 p-4 bg-slate-900/80 border border-slate-800/50 rounded-xl">
+                      <div className="text-xs sm:text-sm text-slate-300">
+                        <strong className="text-slate-200">Acción:</strong> {task.action}
+                      </div>
+                      
+                      {/* Botones de Enlaces */}
+                      {task.links && (
+                        <div className="mt-3 flex flex-wrap gap-2">
+                          {task.links.map((link, idx) => (
+                            <a
+                              key={idx}
+                              href={link.url}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-blue-500/10 text-blue-400 border border-blue-500/20 hover:bg-blue-500/20 rounded-lg text-xs font-medium transition-colors"
+                            >
+                              {link.label}
+                              <svg className="w-3 h-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+                              </svg>
+                            </a>
+                          ))}
+                        </div>
+                      )}
                     </div>
 
                     {/* Test */}
