@@ -1,402 +1,369 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 
-// Tipos para el flujo de eXp Realty CALA
-type PhaseId = "fase1" | "fase2" | "fase3";
-type AgentStatus = "Submitted" | "Waiting for Agent" | "Broker Review" | "Active" | "SLA Warning";
-
-interface Agent {
+interface Task {
   id: string;
-  name: string;
-  email: string;
-  country: string;
-  phase: PhaseId;
-  status: AgentStatus;
-  sponsor: string;
-  daysInProcess: number;
-  slaDaysLimit: number;
-  tasksCompleted: number;
-  totalTasks: number;
-  checklist: { id: string; label: string; done: boolean }[];
+  phaseId: number;
+  phaseName: string;
+  title: string;
+  feynmanConcept: string;
+  action: string;
+  feynmanCheck: string;
+  warning?: string;
 }
 
-const INITIAL_AGENTS: Agent[] = [
+const ONBOARDING_TASKS: Task[] = [
+  // FASE 1
   {
-    id: "EXP-101",
-    name: "Carlos Mendoza",
-    email: "carlos.mendoza@email.com",
-    country: "México",
-    phase: "fase1",
-    status: "Submitted",
-    sponsor: "Roberto Gómez (eXp MX)",
-    daysInProcess: 4,
-    slaDaysLimit: 30,
-    tasksCompleted: 3,
-    totalTasks: 4,
-    checklist: [
-      { id: "c1", label: "Formulario de postulación completo", done: true },
-      { id: "c2", label: "Validación de patrocinador / Sponsor activo", done: true },
-      { id: "c3", label: "Carga de documento de identidad oficial", done: true },
-      { id: "c4", label: "Validación de antecedentes legales", done: false },
-    ],
+    id: "1.1",
+    phaseId: 1,
+    phaseName: "Fase 1: Postulación",
+    title: "1.1 Blindaje del Patrocinador (Sponsor)",
+    feynmanConcept:
+      "Imagina que vas a una fiesta exclusiva con lista en la puerta: si no dices quién te invitó antes de entrar, la puerta se cierra y te asignan a otra mesa de por vida. En eXp, tu patrocinador es permanente y no se puede corregir después.",
+    action:
+      'Al completar tu postulación (Join App), busca el campo "Who is your sponsor?" y escribe con exactitud el nombre completo y correo de tu sponsor directo dentro de la Organización GOLD by Virginia Restrepo.',
+    feynmanCheck:
+      '¿Le enviaste una captura de pantalla a tu sponsor confirmando su nombre en esa casilla antes de hacer clic en "Enviar"?',
+    warning: "Si envías sin sponsor o con un error tipográfico, no pertenecerás al equipo de Virginia Restrepo.",
   },
   {
-    id: "EXP-102",
-    name: "Mariana Restrepo",
-    email: "mariana.r@email.com",
-    country: "Colombia",
-    phase: "fase2",
-    status: "SLA Warning",
-    sponsor: "Diana Castro (eXp CO)",
-    daysInProcess: 6,
-    slaDaysLimit: 5, // SLA ICA crítico: 5 días hábiles
-    tasksCompleted: 2,
-    totalTasks: 4,
-    checklist: [
-      { id: "c1", label: "Generación de contrato ICA independiente", done: true },
-      { id: "c2", label: "Envío para firma digital (DocuSign)", done: true },
-      { id: "c3", label: "Firma completada por el agente", done: false },
-      { id: "c4", label: "Aprobación final de Legal / Broker titular", done: false },
-    ],
+    id: "1.2",
+    phaseId: 1,
+    phaseName: "Fase 1: Postulación",
+    title: "1.2 Expediente Legal y Fiscal (Sin Jerga)",
+    feynmanConcept:
+      "La compañía necesita verificar que eres una persona real, con facultades comerciales en tu país y con una cuenta bancaria lista para recibir transferencias legales de comisiones.",
+    action:
+      "Prepara en formato PDF legible tu documento de identidad vigente (DNI/Cédula/RUT), constancia fiscal de tu país (SAT en México, DIAN en Colombia, SII en Chile, etc.) y certificado bancario a tu nombre.",
+    feynmanCheck:
+      "Si abres cada archivo en la pantalla de tu teléfono a oscuras, ¿se leen todos los números y letras sin hacer esfuerzo visual?",
+  },
+  // FASE 2
+  {
+    id: "2.1",
+    phaseId: 2,
+    phaseName: "Fase 2: Contrato ICA",
+    title: "2.1 Comprender el Modelo 80/20 y el Cap Anual",
+    feynmanConcept:
+      'Tú eres dueño de tu negocio. De cada 100 que cobras, 80 son tuyos y 20 financian la nube de eXp. En cuanto esos 20 suman la cuota tope anual de tu país ("Cap"), eXp ya no retiene nada y te llevas el 100% de tus comisiones.',
+    action:
+      "Abre el borrador de tu contrato ICA (Independent Contractor Agreement) que llega a tu correo y localiza tres números: tu Cap anual, tu cuota mensual de tecnología y el split 80/20.",
+    feynmanCheck:
+      '¿Puedes explicarle este modelo a un familiar de 10 años en una sola oración sencilla sin trabarte?',
   },
   {
-    id: "EXP-103",
-    name: "Sebastián Vidal",
-    email: "s.vidal@email.com",
-    country: "Chile",
-    phase: "fase3",
-    status: "Waiting for Agent",
-    sponsor: "Rodrigo Parra (eXp CL)",
-    daysInProcess: 12,
-    slaDaysLimit: 45,
-    tasksCompleted: 3,
-    totalTasks: 5,
-    checklist: [
-      { id: "c1", label: "Aprovisionamiento correo @exprealty.com", done: true },
-      { id: "c2", label: "Activación de licencia eXp World", done: true },
-      { id: "c3", label: "Alta en Workplace y grupos oficiales CALA", done: true },
-      { id: "c4", label: "Asignación de mentor de inducción", done: false },
-      { id: "c5", label: "Sesión de bienvenida completada", done: false },
-    ],
+    id: "2.2",
+    phaseId: 2,
+    phaseName: "Fase 2: Contrato ICA",
+    title: "2.2 Firma Digital y Validación de Broker",
+    feynmanConcept:
+      "Es el apretón de manos formal. Al firmar digitalmente, el Broker Titular de tu país verifica tus antecedentes y coloca el sello oficial de entrada en el sistema.",
+    action:
+      "Firma todas las iniciales y campos requeridos vía DocuSign o SignNow. Revisa tu bandeja de entrada hasta que el documento cambie a estado completado.",
+    feynmanCheck:
+      '¿Tienes en tu correo el PDF final con el sello que dice "Completed / Signed by all parties"?',
+  },
+  // FASE 3
+  {
+    id: "3.1",
+    phaseId: 3,
+    phaseName: "Fase 3: Activación",
+    title: "3.1 Tu Llave Digital: eXp Passport y Correo Oficial",
+    feynmanConcept:
+      "Es tu documento de identidad digital. Una sola contraseña te abre la oficina virtual, la intranet, las capacitaciones y el correo corporativo en todo el mundo.",
+    action:
+      "Activa tu cuenta de Google Workspace con tu nuevo correo corporativo (@exprealty.com) y configura la contraseña con verificación en dos pasos en tu teléfono.",
+    feynmanCheck:
+      "Abre una ventana de incógnito en tu navegador e inicia sesión en Gmail con tu usuario @exprealty.com. ¿Entraste a la primera?",
   },
   {
-    id: "EXP-104",
-    name: "Ana Sofía Herrera",
-    email: "ana.herrera@email.com",
-    country: "Panamá",
-    phase: "fase3",
-    status: "Active",
-    sponsor: "Carlos Morales (eXp PA)",
-    daysInProcess: 18,
-    slaDaysLimit: 120,
-    tasksCompleted: 5,
-    totalTasks: 5,
-    checklist: [
-      { id: "c1", label: "Aprovisionamiento correo @exprealty.com", done: true },
-      { id: "c2", label: "Activación de licencia eXp World", done: true },
-      { id: "c3", label: "Alta en Workplace y grupos oficiales CALA", done: true },
-      { id: "c4", label: "Asignación de mentor de inducción", done: true },
-      { id: "c5", label: "Sesión de bienvenida completada", done: true },
-    ],
+    id: "3.2",
+    phaseId: 3,
+    phaseName: "Fase 3: Activación",
+    title: "3.2 Ingreso a Workplace y a la Comunidad GOLD",
+    feynmanConcept:
+      "Workplace es el edificio de oficinas pero en formato red social. Aquí conviven las noticias del corporativo y la sala de estrategia privada del equipo GOLD.",
+    action:
+      "Descarga la app Workplace en tu teléfono y computadora. Ingresa con tu eXp Passport y pide acceso a los grupos de tu país y al grupo oficial Organización GOLD by Virginia Restrepo.",
+    feynmanCheck:
+      '¿Escribiste tu mensaje de presentación en el grupo GOLD diciendo tu nombre, país y quién es tu sponsor?',
+  },
+  {
+    id: "3.3",
+    phaseId: 3,
+    phaseName: "Fase 3: Activación",
+    title: "3.3 Entrada al Campus Virtual (eXp World)",
+    feynmanConcept:
+      "El campus de eXp no tiene cemento ni ladrillos: está en una aplicación 3D. Entras como un avatar para hablar con contabilidad, soporte técnico o brokers en tiempo real.",
+    action:
+      "Descarga el software de eXp World en tu ordenador, crea tu avatar y visita la sala de operaciones del Broker de tu país.",
+    feynmanCheck:
+      "¿Caminaste con tu avatar hasta el auditorio principal y confirmaste que tu micrófono y auriculares funcionan?",
+  },
+  {
+    id: "3.4",
+    phaseId: 3,
+    phaseName: "Fase 3: Activación",
+    title: "3.4 Sesión de Despegue con tu Mentor GOLD",
+    feynmanConcept:
+      "Aprender a manejar no se logra leyendo el manual: se logra subiéndose al auto con un conductor experimentado al lado. Esta sesión fija tu rumbo para tus primeras ventas.",
+    action:
+      "Agenda tu reunión 1 a 1 de arranque con tu sponsor o líder designado de la Organización GOLD para crear tu plan de los primeros 30 días.",
+    feynmanCheck:
+      "¿Tienes ya escrita en papel una lista con tus primeros 20 contactos y la fecha exacta de tu primera capacitación de ventas?",
   },
 ];
 
-export default function OnboardingDashboard() {
-  const [agents, setAgents] = useState<Agent[]>(INITIAL_AGENTS);
-  const [filterPhase, setFilterPhase] = useState<string>("all");
-  const [search, setSearch] = useState<string>("");
-  const [selectedAgent, setSelectedAgent] = useState<Agent | null>(null);
+export default function GoldOnboardingGuide() {
+  const [completed, setCompleted] = useState<string[]>([]);
+  const [activeTab, setActiveTab] = useState<number | "all">("all");
+  const [mounted, setMounted] = useState(false);
 
-  const filteredAgents = agents.filter((agent) => {
-    const matchesPhase = filterPhase === "all" || agent.phase === filterPhase;
-    const matchesSearch =
-      agent.name.toLowerCase().includes(search.toLowerCase()) ||
-      agent.country.toLowerCase().includes(search.toLowerCase()) ||
-      agent.id.toLowerCase().includes(search.toLowerCase());
-    return matchesPhase && matchesSearch;
-  });
+  useEffect(() => {
+    setMounted(true);
+    const saved = localStorage.getItem("gold_onboarding_feynman_progress");
+    if (saved) {
+      try {
+        setCompleted(JSON.parse(saved));
+      } catch {
+        setCompleted([]);
+      }
+    }
+  }, []);
 
-  const toggleChecklist = (taskId: string) => {
-    if (!selectedAgent) return;
-    const updatedChecklist = selectedAgent.checklist.map((task) =>
-      task.id === taskId ? { ...task, done: !task.done } : task
-    );
-    const completedCount = updatedChecklist.filter((t) => t.done).length;
-
-    const updatedAgent: Agent = {
-      ...selectedAgent,
-      checklist: updatedChecklist,
-      tasksCompleted: completedCount,
-      status: completedCount === selectedAgent.totalTasks && selectedAgent.phase === "fase3" ? "Active" : selectedAgent.status,
-    };
-
-    setSelectedAgent(updatedAgent);
-    setAgents(agents.map((a) => (a.id === updatedAgent.id ? updatedAgent : a)));
+  const toggleTask = (id: string) => {
+    const updated = completed.includes(id)
+      ? completed.filter((item) => item !== id)
+      : [...completed, id];
+    setCompleted(updated);
+    localStorage.setItem("gold_onboarding_feynman_progress", JSON.stringify(updated));
   };
 
-  const advancePhase = (agent: Agent) => {
-    let nextPhase: PhaseId = agent.phase;
-    if (agent.phase === "fase1") nextPhase = "fase2";
-    else if (agent.phase === "fase2") nextPhase = "fase3";
-
-    const updated = {
-      ...agent,
-      phase: nextPhase,
-      status: nextPhase === "fase3" ? ("Waiting for Agent" as AgentStatus) : ("Submitted" as AgentStatus),
-    };
-    setSelectedAgent(updated);
-    setAgents(agents.map((a) => (a.id === updated.id ? updated : a)));
+  const resetProgress = () => {
+    if (confirm("¿Deseas reiniciar tu progreso en la guía?")) {
+      setCompleted([]);
+      localStorage.removeItem("gold_onboarding_feynman_progress");
+    }
   };
+
+  const total = ONBOARDING_TASKS.length;
+  const progressPercent = Math.round((completed.length / total) * 100);
+
+  const filteredTasks =
+    activeTab === "all"
+      ? ONBOARDING_TASKS
+      : ONBOARDING_TASKS.filter((t) => t.phaseId === activeTab);
+
+  if (!mounted) {
+    return null;
+  }
 
   return (
-    <div className="min-h-screen bg-slate-950 text-slate-100 flex flex-col font-sans">
-      {/* Barra superior de navegación */}
-      <header className="border-b border-slate-800 bg-slate-900/80 backdrop-blur px-6 py-4 flex flex-wrap items-center justify-between gap-4">
-        <div className="flex items-center gap-3">
-          <div className="w-10 h-10 rounded-lg bg-amber-500/10 border border-amber-500/30 flex items-center justify-center font-bold text-amber-400 text-lg">
-            eXp
-          </div>
+    <div className="min-h-screen bg-slate-950 text-slate-100 font-sans pb-24">
+      {/* Cabecera Principal */}
+      <header className="sticky top-0 z-40 bg-slate-900/90 backdrop-blur-md border-b border-slate-800 px-4 sm:px-8 py-4">
+        <div className="max-w-4xl mx-auto flex flex-col md:flex-row md:items-center justify-between gap-4">
           <div>
-            <h1 className="text-lg font-bold tracking-tight text-white flex items-center gap-2">
-              Onboarding OS <span className="text-xs bg-blue-500/10 text-blue-400 border border-blue-500/20 px-2 py-0.5 rounded">CALA Region</span>
+            <div className="flex items-center gap-2">
+              <span className="px-2 py-0.5 rounded text-[10px] font-extrabold uppercase tracking-wider bg-amber-500/10 text-amber-400 border border-amber-500/30">
+                Organización GOLD
+              </span>
+              <span className="text-xs text-slate-400 font-medium">by Virginia Restrepo</span>
+            </div>
+            <h1 className="text-xl sm:text-2xl font-bold tracking-tight text-white mt-0.5">
+              Guía de Onboarding Feynman
             </h1>
-            <p className="text-xs text-slate-400">Plataforma de Integración y Acreditación de Agentes</p>
+            <p className="text-xs text-slate-400">
+              Paso a paso para incorporarte a eXp Realty sin tecnicismos ni confusiones.
+            </p>
           </div>
-        </div>
 
-        {/* Vigencias informativas por país */}
-        <div className="hidden lg:flex items-center gap-3 text-xs bg-slate-900 border border-slate-800 px-3 py-1.5 rounded-lg text-slate-300">
-          <span className="text-slate-500 font-medium">Vigencias CALA:</span>
-          <span className="bg-slate-800 px-2 py-0.5 rounded">🇲🇽 México: 30d</span>
-          <span className="bg-slate-800 px-2 py-0.5 rounded">🇨🇴 Colombia: 45d</span>
-          <span className="bg-slate-800 px-2 py-0.5 rounded">🇨🇱 Chile: 45d</span>
-          <span className="bg-slate-800 px-2 py-0.5 rounded">🇵🇦 Panamá: 120d</span>
-        </div>
-      </header>
-
-      {/* Contenedor principal */}
-      <main className="flex-1 max-w-7xl w-full mx-auto p-6 space-y-6">
-        {/* Tarjetas de métricas rápidas */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-          <div className="bg-slate-900 border border-slate-800 p-4 rounded-xl">
-            <span className="text-xs text-slate-400 uppercase font-semibold">Postulación Activa</span>
-            <div className="text-2xl font-bold mt-1 text-white">
-              {agents.filter((a) => a.phase === "fase1").length}
+          {/* Barra de progreso global */}
+          <div className="bg-slate-950/80 border border-slate-800 p-3 rounded-xl min-w-[240px]">
+            <div className="flex justify-between items-center text-xs mb-1.5 font-medium">
+              <span className="text-slate-400">Progreso general</span>
+              <span className="font-bold text-amber-400">{progressPercent}%</span>
             </div>
-            <p className="text-xs text-blue-400 mt-1">Fase 01: Precalificación y Sponsor</p>
-          </div>
-          <div className="bg-slate-900 border border-slate-800 p-4 rounded-xl">
-            <span className="text-xs text-slate-400 uppercase font-semibold">Contratos en Trámite</span>
-            <div className="text-2xl font-bold mt-1 text-amber-400">
-              {agents.filter((a) => a.phase === "fase2").length}
+            <div className="w-full bg-slate-800 rounded-full h-2 overflow-hidden">
+              <div
+                className="bg-gradient-to-r from-amber-500 to-amber-400 h-2 rounded-full transition-all duration-500"
+                style={{ width: `${progressPercent}%` }}
+              />
             </div>
-            <p className="text-xs text-amber-400/80 mt-1">Fase 02: SLA 5 días hábiles ICA</p>
-          </div>
-          <div className="bg-slate-900 border border-slate-800 p-4 rounded-xl">
-            <span className="text-xs text-slate-400 uppercase font-semibold">Activación y Cierre</span>
-            <div className="text-2xl font-bold mt-1 text-emerald-400">
-              {agents.filter((a) => a.phase === "fase3").length}
-            </div>
-            <p className="text-xs text-emerald-400/80 mt-1">Fase 03: eXp World & Workplace</p>
-          </div>
-          <div className="bg-slate-900 border border-rose-900/40 p-4 rounded-xl bg-gradient-to-br from-slate-900 to-rose-950/20">
-            <span className="text-xs text-rose-400 uppercase font-semibold">Alertas de SLA</span>
-            <div className="text-2xl font-bold mt-1 text-rose-400">
-              {agents.filter((a) => a.status === "SLA Warning").length}
-            </div>
-            <p className="text-xs text-rose-400/80 mt-1">Requieren atención de Broker</p>
-          </div>
-        </div>
-
-        {/* Filtros y buscador */}
-        <div className="flex flex-col sm:flex-row items-center justify-between gap-4 bg-slate-900/50 p-4 rounded-xl border border-slate-800">
-          <div className="flex items-center gap-2 overflow-x-auto w-full sm:w-auto">
-            <button
-              onClick={() => setFilterPhase("all")}
-              className={`px-3 py-1.5 text-xs rounded-lg font-medium transition ${
-                filterPhase === "all" ? "bg-amber-500 text-slate-950 font-semibold" : "bg-slate-800 text-slate-300 hover:bg-slate-700"
-              }`}
-            >
-              Todos ({agents.length})
-            </button>
-            <button
-              onClick={() => setFilterPhase("fase1")}
-              className={`px-3 py-1.5 text-xs rounded-lg font-medium transition ${
-                filterPhase === "fase1" ? "bg-amber-500 text-slate-950 font-semibold" : "bg-slate-800 text-slate-300 hover:bg-slate-700"
-              }`}
-            >
-              01 Postulación
-            </button>
-            <button
-              onClick={() => setFilterPhase("fase2")}
-              className={`px-3 py-1.5 text-xs rounded-lg font-medium transition ${
-                filterPhase === "fase2" ? "bg-amber-500 text-slate-950 font-semibold" : "bg-slate-800 text-slate-300 hover:bg-slate-700"
-              }`}
-            >
-              02 Contrato ICA
-            </button>
-            <button
-              onClick={() => setFilterPhase("fase3")}
-              className={`px-3 py-1.5 text-xs rounded-lg font-medium transition ${
-                filterPhase === "fase3" ? "bg-amber-500 text-slate-950 font-semibold" : "bg-slate-800 text-slate-300 hover:bg-slate-700"
-              }`}
-            >
-              03 Activación
-            </button>
-          </div>
-
-          <div className="w-full sm:w-72">
-            <input
-              type="text"
-              placeholder="Buscar por agente, país o ID..."
-              value={search}
-              onChange={(e) => setSearch(e.target.value)}
-              className="w-full bg-slate-950 border border-slate-800 text-xs text-white rounded-lg px-3 py-2 outline-none focus:border-amber-500"
-            />
-          </div>
-        </div>
-
-        {/* Tabla de postulantes */}
-        <div className="bg-slate-900 border border-slate-800 rounded-xl overflow-hidden shadow-xl">
-          <div className="overflow-x-auto">
-            <table className="w-full text-left text-sm text-slate-300">
-              <thead className="bg-slate-950/60 text-xs uppercase text-slate-400 border-b border-slate-800 font-semibold">
-                <tr>
-                  <th className="px-6 py-3">Agente / ID</th>
-                  <th className="px-6 py-3">País</th>
-                  <th className="px-6 py-3">Fase Actual</th>
-                  <th className="px-6 py-3">Progreso</th>
-                  <th className="px-6 py-3">SLA / Tiempo</th>
-                  <th className="px-6 py-3">Estado</th>
-                  <th className="px-6 py-3 text-right">Acción</th>
-                </tr>
-              </thead>
-              <tbody className="divide-y divide-slate-800">
-                {filteredAgents.map((agent) => (
-                  <tr key={agent.id} className="hover:bg-slate-800/40 transition">
-                    <td className="px-6 py-4">
-                      <div className="font-medium text-white">{agent.name}</div>
-                      <div className="text-xs text-slate-500 font-mono">{agent.id} • {agent.email}</div>
-                    </td>
-                    <td className="px-6 py-4 font-medium text-slate-200">{agent.country}</td>
-                    <td className="px-6 py-4">
-                      {agent.phase === "fase1" && <span className="text-xs text-blue-400 font-medium">01 Postulación</span>}
-                      {agent.phase === "fase2" && <span className="text-xs text-amber-400 font-medium">02 Contrato ICA</span>}
-                      {agent.phase === "fase3" && <span className="text-xs text-emerald-400 font-medium">03 Activación</span>}
-                    </td>
-                    <td className="px-6 py-4">
-                      <div className="w-28 bg-slate-800 h-2 rounded-full overflow-hidden">
-                        <div
-                          className="bg-amber-400 h-full rounded-full transition-all"
-                          style={{ width: `${(agent.tasksCompleted / agent.totalTasks) * 100}%` }}
-                        />
-                      </div>
-                      <span className="text-xs text-slate-500 mt-1 block">
-                        {agent.tasksCompleted} de {agent.totalTasks} tareas
-                      </span>
-                    </td>
-                    <td className="px-6 py-4 text-xs font-mono">
-                      {agent.daysInProcess}d / {agent.slaDaysLimit}d límite
-                    </td>
-                    <td className="px-6 py-4">
-                      <span
-                        className={`text-xs px-2.5 py-1 rounded-full font-medium ${
-                          agent.status === "Active"
-                            ? "bg-emerald-500/10 text-emerald-400 border border-emerald-500/20"
-                            : agent.status === "SLA Warning"
-                            ? "bg-rose-500/10 text-rose-400 border border-rose-500/20"
-                            : "bg-blue-500/10 text-blue-400 border border-blue-500/20"
-                        }`}
-                      >
-                        {agent.status}
-                      </span>
-                    </td>
-                    <td className="px-6 py-4 text-right">
-                      <button
-                        onClick={() => setSelectedAgent(agent)}
-                        className="bg-slate-800 hover:bg-amber-500 hover:text-slate-950 text-white text-xs px-3 py-1.5 rounded font-medium transition"
-                      >
-                        Gestionar
-                      </button>
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
-        </div>
-      </main>
-
-      {/* Modal interactivo de auditoría y gestión de agente */}
-      {selectedAgent && (
-        <div className="fixed inset-0 z-50 bg-black/70 backdrop-blur-sm flex items-center justify-center p-4">
-          <div className="bg-slate-900 border border-slate-800 rounded-2xl max-w-lg w-full p-6 space-y-6 shadow-2xl">
-            <div className="flex items-start justify-between border-b border-slate-800 pb-4">
-              <div>
-                <h3 className="text-lg font-bold text-white">{selectedAgent.name}</h3>
-                <p className="text-xs text-slate-400 font-mono">{selectedAgent.id} • {selectedAgent.country} • Sponsor: {selectedAgent.sponsor}</p>
-              </div>
-              <button
-                onClick={() => setSelectedAgent(null)}
-                className="text-slate-400 hover:text-white p-1"
-              >
-                ✕
-              </button>
-            </div>
-
-            {/* Checklist de la fase actual */}
-            <div className="space-y-3">
-              <h4 className="text-xs font-bold text-amber-400 uppercase tracking-wider">
-                Checklist de Control (
-                {selectedAgent.phase === "fase1"
-                  ? "Fase 01: Precalificación"
-                  : selectedAgent.phase === "fase2"
-                  ? "Fase 02: Contrato y Aprobación"
-                  : "Fase 03: Credenciales eXp World"}
-                )
-              </h4>
-              <div className="space-y-2">
-                {selectedAgent.checklist.map((task) => (
-                  <label
-                    key={task.id}
-                    className="flex items-center gap-3 p-3 bg-slate-950 border border-slate-800 rounded-lg cursor-pointer hover:border-slate-700 transition"
-                  >
-                    <input
-                      type="checkbox"
-                      checked={task.done}
-                      onChange={() => toggleChecklist(task.id)}
-                      className="w-4 h-4 rounded text-amber-500 bg-slate-900 border-slate-700 focus:ring-0"
-                    />
-                    <span className={`text-xs ${task.done ? "line-through text-slate-500" : "text-slate-200"}`}>
-                      {task.label}
-                    </span>
-                  </label>
-                ))}
-              </div>
-            </div>
-
-            {/* Botones de acción */}
-            <div className="pt-2 flex items-center justify-between gap-3 border-t border-slate-800">
-              <button
-                onClick={() => setSelectedAgent(null)}
-                className="px-4 py-2 bg-slate-800 hover:bg-slate-700 text-xs font-medium text-slate-300 rounded-lg transition"
-              >
-                Cerrar
-              </button>
-
-              {selectedAgent.phase !== "fase3" && (
+            <div className="flex justify-between items-center text-[11px] text-slate-500 mt-1">
+              <span>{completed.length} de {total} completados</span>
+              {completed.length > 0 && (
                 <button
-                  onClick={() => advancePhase(selectedAgent)}
-                  className="px-4 py-2 bg-amber-500 hover:bg-amber-400 text-xs font-bold text-slate-950 rounded-lg transition"
+                  onClick={resetProgress}
+                  className="text-slate-400 hover:text-rose-400 underline decoration-dotted transition"
                 >
-                  Avanzar a Siguiente Fase →
+                  Reiniciar
                 </button>
               )}
             </div>
           </div>
         </div>
-      )}
+      </header>
+
+      {/* Selector de Fases */}
+      <div className="max-w-4xl mx-auto px-4 sm:px-8 mt-6">
+        <div className="flex items-center gap-2 overflow-x-auto pb-2 border-b border-slate-800 text-xs">
+          <button
+            onClick={() => setActiveTab("all")}
+            className={`px-3 py-2 rounded-lg font-medium transition whitespace-nowrap ${
+              activeTab === "all"
+                ? "bg-amber-500 text-slate-950 font-bold"
+                : "bg-slate-900 text-slate-300 hover:bg-slate-800"
+            }`}
+          >
+            Todas las fases ({total})
+          </button>
+          <button
+            onClick={() => setActiveTab(1)}
+            className={`px-3 py-2 rounded-lg font-medium transition whitespace-nowrap ${
+              activeTab === 1
+                ? "bg-amber-500 text-slate-950 font-bold"
+                : "bg-slate-900 text-slate-300 hover:bg-slate-800"
+            }`}
+          >
+            Fase 1: Postulación
+          </button>
+          <button
+            onClick={() => setActiveTab(2)}
+            className={`px-3 py-2 rounded-lg font-medium transition whitespace-nowrap ${
+              activeTab === 2
+                ? "bg-amber-500 text-slate-950 font-bold"
+                : "bg-slate-900 text-slate-300 hover:bg-slate-800"
+            }`}
+          >
+            Fase 2: Contrato ICA
+          </button>
+          <button
+            onClick={() => setActiveTab(3)}
+            className={`px-3 py-2 rounded-lg font-medium transition whitespace-nowrap ${
+              activeTab === 3
+                ? "bg-amber-500 text-slate-950 font-bold"
+                : "bg-slate-900 text-slate-300 hover:bg-slate-800"
+            }`}
+          >
+            Fase 3: Activación
+          </button>
+        </div>
+      </div>
+
+      {/* Lista de Tareas Interactivas */}
+      <main className="max-w-4xl mx-auto px-4 sm:px-8 mt-6 space-y-5">
+        {filteredTasks.map((task) => {
+          const isDone = completed.includes(task.id);
+          return (
+            <article
+              key={task.id}
+              className={`rounded-2xl border transition-all duration-200 overflow-hidden ${
+                isDone
+                  ? "bg-slate-900/40 border-emerald-900/40"
+                  : "bg-slate-900 border-slate-800 hover:border-slate-700 shadow-xl"
+              }`}
+            >
+              <div className="p-5 sm:p-6">
+                {/* Cabecera del ítem */}
+                <div className="flex items-start gap-4">
+                  <button
+                    onClick={() => toggleTask(task.id)}
+                    aria-label={`Marcar ${task.title}`}
+                    className={`mt-1 flex-shrink-0 w-6 h-6 rounded-md border flex items-center justify-center transition-all ${
+                      isDone
+                        ? "bg-emerald-500 border-emerald-500 text-slate-950"
+                        : "bg-slate-950 border-slate-700 hover:border-amber-400"
+                    }`}
+                  >
+                    {isDone && (
+                      <svg className="w-4 h-4 stroke-[3]" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                        <polyline points="20 6 9 17 4 12" />
+                      </svg>
+                    )}
+                  </button>
+
+                  <div className="flex-1 min-w-0">
+                    <div className="flex flex-wrap items-center gap-2 mb-1">
+                      <span className="text-[11px] font-semibold text-slate-400 uppercase tracking-wider">
+                        {task.phaseName}
+                      </span>
+                      {isDone && (
+                        <span className="text-[10px] bg-emerald-500/10 text-emerald-400 border border-emerald-500/30 px-2 py-0.2 rounded font-semibold">
+                          Completado
+                        </span>
+                      )}
+                    </div>
+                    <h2
+                      onClick={() => toggleTask(task.id)}
+                      className={`text-base sm:text-lg font-bold cursor-pointer transition ${
+                        isDone ? "text-slate-400 line-through" : "text-white hover:text-amber-400"
+                      }`}
+                    >
+                      {task.title}
+                    </h2>
+
+                    {/* Explicación en lenguaje simple (Método Feynman) */}
+                    <div className="mt-3 text-xs sm:text-sm text-slate-300 leading-relaxed bg-slate-950/60 p-3.5 rounded-xl border border-slate-800/80">
+                      <span className="text-amber-400 font-bold block mb-1 text-[11px] uppercase tracking-wider">
+                        💡 ¿Qué significa esto en simple?
+                      </span>
+                      {task.feynmanConcept}
+                    </div>
+
+                    {/* Alerta si aplica */}
+                    {task.warning && !isDone && (
+                      <div className="mt-3 text-xs text-rose-300 bg-rose-950/20 border border-rose-900/50 p-3 rounded-lg flex items-center gap-2">
+                        <span>⚠️</span>
+                        <span>{task.warning}</span>
+                      </div>
+                    )}
+
+                    {/* Acción Requerida */}
+                    <div className="mt-3 text-xs sm:text-sm text-slate-300">
+                      <strong className="text-slate-200">Acción:</strong> {task.action}
+                    </div>
+
+                    {/* Pregunta de Verificación Feynman */}
+                    <div
+                      className={`mt-4 p-3.5 rounded-xl border text-xs sm:text-sm flex items-start gap-3 transition ${
+                        isDone
+                          ? "bg-emerald-950/10 border-emerald-900/30 text-emerald-300"
+                          : "bg-amber-950/20 border-amber-900/40 text-amber-200"
+                      }`}
+                    >
+                      <span className="text-base shrink-0">🎯</span>
+                      <div>
+                        <span className="font-bold uppercase tracking-wider text-[10px] block mb-0.5">
+                          Prueba de Control Feynman
+                        </span>
+                        <span>{task.feynmanCheck}</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </article>
+          );
+        })}
+
+        {/* Tarjeta de Felicitación al completar el 100% */}
+        {progressPercent === 100 && (
+          <div className="p-8 rounded-2xl bg-gradient-to-br from-amber-500/20 via-slate-900 to-slate-900 border border-amber-500/40 text-center space-y-3 shadow-2xl">
+            <span className="text-4xl block">🚀</span>
+            <h2 className="text-2xl font-bold text-amber-400">¡Onboarding Oficialmente Completado!</h2>
+            <p className="text-sm text-slate-300 max-w-lg mx-auto">
+              Has cubierto todos los pasos técnicos y operativos para pertenecer formalmente a la{" "}
+              <strong className="text-white">Organización GOLD by Virginia Restrepo</strong> en eXp Realty.
+            </p>
+            <p className="text-xs text-amber-300/80 font-medium">
+              Tu siguiente paso es asistir a la próxima reunión semanal de inducción y estrategia de equipo.
+            </p>
+          </div>
+        )}
+      </main>
     </div>
   );
 }
