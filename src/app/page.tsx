@@ -14,7 +14,7 @@ interface Task {
 }
 
 const ONBOARDING_TASKS: Task[] = [
-  // FASE 1
+  // FASE 1: POSTULACIÓN
   {
     id: "1.1",
     phaseId: 1,
@@ -40,7 +40,8 @@ const ONBOARDING_TASKS: Task[] = [
     feynmanCheck:
       "Si abres cada archivo en la pantalla de tu teléfono a oscuras, ¿se leen todos los números y letras sin hacer esfuerzo visual?",
   },
-  // FASE 2
+
+  // FASE 2: CONTRATO ICA
   {
     id: "2.1",
     phaseId: 2,
@@ -65,18 +66,19 @@ const ONBOARDING_TASKS: Task[] = [
     feynmanCheck:
       '¿Tienes en tu correo el PDF final con el sello que dice "Completed / Signed by all parties"?',
   },
-  // FASE 3
+
+  // FASE 3: ACTIVACIÓN Y COMUNIDAD
   {
     id: "3.1",
     phaseId: 3,
     phaseName: "Fase 3: Activación",
-    title: "3.1 Tu Llave Digital: eXp Passport y Correo Oficial por País",
+    title: "3.1 Tu Llave Digital: eXp Passport y Correo de País",
     feynmanConcept:
-      "Es tu documento de identidad digital. En eXp CALA, cada país cuenta con su propio dominio oficial de Google Workspace según la filial local (por ejemplo: @expcolombiaci.co en Colombia, @expchile.cl en Chile, @expmexico.mx en México, etc.). Con este correo institucional y tu contraseña de eXp Passport accedes a todas las herramientas del ecosistema.",
+      "Es tu documento de identidad digital. En eXp CALA, cada país cuenta con su propio dominio oficial de Google Workspace según la filial local (ej. @expcolombiaci.co en Colombia, @expchile.cl en Chile, @expmexico.mx en México, etc.). Con esta cuenta y tu eXp Passport accedes al ecosistema.",
     action:
-      "Revisa tu correo personal para ubicar el correo de bienvenida de Onboarding donde viene tu nuevo usuario institucional (con el dominio específico de tu país) y actívalo en Google Workspace configurando la verificación en dos pasos en tu teléfono.",
+      "Revisa tu correo personal, ubica la bienvenida de Onboarding donde viene tu usuario institucional local y actívalo configurando la verificación en dos pasos en tu teléfono.",
     feynmanCheck:
-      "Abre una ventana de incógnito en tu navegador e inicia sesión en Gmail con tu nuevo correo oficial del país (ej. @expcolombiaci.co, @expchile.cl, etc.). ¿Entraste a la primera?",
+      "Abre una ventana de incógnito en tu navegador e inicia sesión en Gmail con tu nuevo correo oficial del país. ¿Entraste a la primera?",
   },
   {
     id: "3.2",
@@ -94,25 +96,127 @@ const ONBOARDING_TASKS: Task[] = [
     id: "3.3",
     phaseId: 3,
     phaseName: "Fase 3: Activación",
-    title: "3.3 Entrada al Campus Virtual (eXp World)",
-    feynmanConcept:
-      "El campus de eXp no tiene cemento ni ladrillos: está en una aplicación 3D. Entras como un avatar para hablar con contabilidad, soporte técnico o brokers en tiempo real.",
-    action:
-      "Descarga el software de eXp World en tu ordenador, crea tu avatar y visita la sala de operaciones del Broker de tu país.",
-    feynmanCheck:
-      "¿Caminaste con tu avatar hasta el auditorio principal y confirmaste que tu micrófono y auriculares funcionan?",
-  },
-  {
-    id: "3.4",
-    phaseId: 3,
-    phaseName: "Fase 3: Activación",
-    title: "3.4 Sesión de Despegue con tu Mentor GOLD",
+    title: "3.3 Sesión de Despegue con tu Mentor GOLD",
     feynmanConcept:
       "Aprender a manejar no se logra leyendo el manual: se logra subiéndose al auto con un conductor experimentado al lado. Esta sesión fija tu rumbo para tus primeras ventas.",
     action:
       "Agenda tu reunión 1 a 1 de arranque con tu sponsor o líder designado de la Organización GOLD para crear tu plan de los primeros 30 días.",
     feynmanCheck:
       "¿Tienes ya escrita en papel una lista con tus primeros 20 contactos y la fecha exacta de tu primera capacitación de ventas?",
+  },
+
+  // FASE 4: HERRAMIENTAS DE GESTIÓN Y FINANZAS (PUNTO 1)
+  {
+    id: "4.1",
+    phaseId: 4,
+    phaseName: "Fase 4: Finanzas y Negocio",
+    title: "4.1 My eXp 3.0: Tu Tablero de Control Financiero",
+    feynmanConcept:
+      "Es el velocímetro y medidor de gasolina de tu empresa inmobiliaria. En una sola pantalla ves cuánto has vendido, cuánto te falta exactamente para completar tu Cap anual del 75/25 y cuánto dinero has generado por comisiones de equipo (Revenue Share).",
+    action:
+      "Ingresa a My eXp 3.0 desde tu panel de aplicaciones Okta/SSO con tu eXp Passport y revisa la sección 'My Dashboard' y el módulo de comisiones.",
+    feynmanCheck:
+      "¿Pudiste entrar a My eXp 3.0, ubicar el gráfico de tu Cap anual y corroborar que tu nombre y sponsor figuran correctamente?",
+  },
+  {
+    id: "4.2",
+    phaseId: 4,
+    phaseName: "Fase 4: Finanzas y Negocio",
+    title: "4.2 Agent Stock Programs: Conviértete en Socio de eXp",
+    feynmanConcept:
+      "En lugar de solo recibir dinero en efectivo, eXp te permite comprar acciones de la compañía pública matriz (NASDAQ: EXPI) con un 10% de descuento directo sobre el precio de mercado, usando el 5% de tus comisiones ganadas.",
+    action:
+      "Abre el módulo 'Agent Stock Programs' en tu portal de trabajo y confirma tu inscripción al programa de compra de acciones con descuento para tus futuros cierres.",
+    feynmanCheck:
+      "¿Comprendes cómo el 10% de descuento en la compra de acciones EXPI se convierte en ganancia patrimonial instantánea y pudiste verificar tu estado activo en el programa?",
+  },
+  {
+    id: "4.3",
+    phaseId: 4,
+    phaseName: "Fase 4: Finanzas y Negocio",
+    title: "4.3 Morgan Stanley at Work: Tu Bóveda de Acciones en Wall Street",
+    feynmanConcept:
+      "Es tu cuenta de custodia bursátil oficial en Estados Unidos. Las acciones que compras con descuento o que eXp te premia por metas de ventas se custodian aquí bajo tu propio número de cuenta regulada.",
+    action:
+      "Accede a Morgan Stanley at Work (Shareworks), completa el registro de seguridad inicial y valida tus datos de identidad para dejar activada tu cuenta de valores.",
+    feynmanCheck:
+      "¿Iniciaste sesión con éxito en Morgan Stanley at Work y puedes ver tu panel de portafolio patrimonial listo?",
+  },
+
+  // FASE 5: CAMPUS VIRTUAL, COMUNICACIÓN Y SOPORTE (PUNTO 3)
+  {
+    id: "5.1",
+    phaseId: 5,
+    phaseName: "Fase 5: Campus y Soporte",
+    title: "5.1 exp.world: Tu Oficina Virtual en el Metaverso 3D",
+    feynmanConcept:
+      "Olvídate de pagar arriendos o gastar gasolina para ir a una oficina física. exp.world es un campus 3D inmersivo donde caminas con tu propio avatar y entras a las oficinas del Broker, Contabilidad o Soporte en tiempo real.",
+    action:
+      "Descarga la aplicación exp.world en tu computador, personaliza tu avatar y navega hasta el auditorio o el salón de operaciones de tu país.",
+    feynmanCheck:
+      "¿Ingresaste a exp.world con tu avatar, encendiste tu micrófono y comprobaste que puedes escuchar e interactuar con el personal de soporte?",
+  },
+  {
+    id: "5.2",
+    phaseId: 5,
+    phaseName: "Fase 5: Campus y Soporte",
+    title: "5.2 eXp Hub: La Intranet y Tablón Global",
+    feynmanConcept:
+      "Es el periódico mural y centro de mando digital de la empresa. En lugar de buscar entre cientos de correos perdidos, aquí encuentras los comunicados oficiales, directivas corporativas y calendarios de eventos en un solo lugar.",
+    action:
+      "Abre 'eXp Hub' desde tu lanzador de aplicaciones y agrega a tus marcadores favoritos la sección de noticias y eventos correspondientes a la región CALA.",
+    feynmanCheck:
+      "¿Localizaste en el Hub la sección de noticias corporativas y el calendario de eventos globales?",
+  },
+  {
+    id: "5.3",
+    phaseId: 5,
+    phaseName: "Fase 5: Campus y Soporte",
+    title: "5.3 Zoho Mail: Correo Institucional de Filial Local",
+    feynmanConcept:
+      "Es tu buzón de correspondencia comercial formal con extensión de tu país (ej. @expchile.cl). Brinda la seriedad corporativa necesaria para enviar contratos, órdenes de corretaje y ofertas a clientes y bancos locales.",
+    action:
+      "Ingresa a Zoho Mail con tus credenciales asignadas de país, personaliza tu bandeja de entrada y crea tu firma electrónica con tus teléfonos y logos oficiales.",
+    feynmanCheck:
+      "¿Te enviaste un correo de prueba a tu cuenta personal desde Zoho Mail y confirmaste que sale con tu firma profesional completa?",
+  },
+  {
+    id: "5.4",
+    phaseId: 5,
+    phaseName: "Fase 5: Campus y Soporte",
+    title: "5.4 Agent Services: La Ventanilla Oficial de Ayuda y Tickets",
+    feynmanConcept:
+      "Es el centro de atención al cliente interno de eXp. Si tienes una consulta sobre el estado de pago de una comisión, acreditación de un contrato o necesitas asistencia técnica, abres un ticket formal aquí.",
+    action:
+      "Entra al portal de Agent Services y familiarízate con las opciones para radicar solicitudes de soporte administrativo, legal y financiero.",
+    feynmanCheck:
+      "¿Sabes exactamente en qué sección de Agent Services debes ingresar una consulta si necesitas dar seguimiento a una liquidación de comisión?",
+  },
+
+  // FASE 6: FORMACIÓN Y CUMPLIMIENTO NORMATIVO (PUNTO 5)
+  {
+    id: "6.1",
+    phaseId: 6,
+    phaseName: "Fase 6: Formación y Ética",
+    title: "6.1 eXp University & International Training: Tu Universidad Inmobiliaria",
+    feynmanConcept:
+      "Es como tener una plataforma de streaming educativo con más de 80 horas semanales de clases en vivo y grabadas, dictadas exclusivamente por los agentes con mejores resultados de la industria sobre prospección, negociación y cierres.",
+    action:
+      "Accede a eXp University e International Training, revisa la parrilla horaria de clases en español de esta semana y selecciona al menos dos sesiones para tu agenda.",
+    feynmanCheck:
+      "¿Elegiste y agendaste ya en tu calendario dos capacitaciones comerciales de eXp University para esta semana?",
+  },
+  {
+    id: "6.2",
+    phaseId: 6,
+    phaseName: "Fase 6: Formación y Ética",
+    title: "6.2 Agent Compliance Self Service: Cursos Obligatorios de Ética y Ley",
+    feynmanConcept:
+      "Es el cinturón de seguridad legal de tu negocio. Son cursos breves pero mandatorios que te enseñan cómo evitar sanciones legales (como prevención de lavado de activos y transparencia publicitaria) para blindar tu patrimonio.",
+    action:
+      "Entra a 'Agent Compliance Self Service - Courses', ubica los módulos asignados a tu cuenta de agente y completa el primer curso mandatorio de inducción ética.",
+    feynmanCheck:
+      "¿Aprobaste tu primer módulo de compliance en la plataforma y comprobaste que el curso figura como completado en tu expediente?",
   },
 ];
 
@@ -173,10 +277,10 @@ export default function GoldOnboardingGuide() {
               <span className="text-xs text-slate-400 font-medium">by Virginia Restrepo</span>
             </div>
             <h1 className="text-xl sm:text-2xl font-bold tracking-tight text-white mt-0.5">
-              Guía de Onboarding
+              Guía de Onboarding & Ecosistema de Herramientas
             </h1>
             <p className="text-xs text-slate-400">
-              Paso a paso para incorporarte a eXp Realty sin tecnicismos ni confusiones.
+              Paso a paso para incorporarte, habilitar tus finanzas, campus 3D y formación en eXp Realty.
             </p>
           </div>
 
@@ -193,7 +297,7 @@ export default function GoldOnboardingGuide() {
               />
             </div>
             <div className="flex justify-between items-center text-[11px] text-slate-500 mt-1">
-              <span>{completed.length} de {total} completados</span>
+              <span>{completed.length} de {total} pasos listos</span>
               {completed.length > 0 && (
                 <button
                   onClick={resetProgress}
@@ -207,7 +311,7 @@ export default function GoldOnboardingGuide() {
         </div>
       </header>
 
-      {/* Selector de Fases */}
+      {/* Selector de Fases y Módulos */}
       <div className="max-w-4xl mx-auto px-4 sm:px-8 mt-6">
         <div className="flex items-center gap-2 overflow-x-auto pb-2 border-b border-slate-800 text-xs">
           <button
@@ -218,7 +322,7 @@ export default function GoldOnboardingGuide() {
                 : "bg-slate-900 text-slate-300 hover:bg-slate-800"
             }`}
           >
-            Todas las fases ({total})
+            Todos ({total})
           </button>
           <button
             onClick={() => setActiveTab(1)}
@@ -250,10 +354,40 @@ export default function GoldOnboardingGuide() {
           >
             Fase 3: Activación
           </button>
+          <button
+            onClick={() => setActiveTab(4)}
+            className={`px-3 py-2 rounded-lg font-medium transition whitespace-nowrap ${
+              activeTab === 4
+                ? "bg-amber-500 text-slate-950 font-bold"
+                : "bg-slate-900 text-slate-300 hover:bg-slate-800"
+            }`}
+          >
+            Fase 4: Finanzas & Acciones (Pto 1)
+          </button>
+          <button
+            onClick={() => setActiveTab(5)}
+            className={`px-3 py-2 rounded-lg font-medium transition whitespace-nowrap ${
+              activeTab === 5
+                ? "bg-amber-500 text-slate-950 font-bold"
+                : "bg-slate-900 text-slate-300 hover:bg-slate-800"
+            }`}
+          >
+            Fase 5: Campus & Soporte (Pto 3)
+          </button>
+          <button
+            onClick={() => setActiveTab(6)}
+            className={`px-3 py-2 rounded-lg font-medium transition whitespace-nowrap ${
+              activeTab === 6
+                ? "bg-amber-500 text-slate-950 font-bold"
+                : "bg-slate-900 text-slate-300 hover:bg-slate-800"
+            }`}
+          >
+            Fase 6: Formación & Ética (Pto 5)
+          </button>
         </div>
       </div>
 
-      {/* Lista de Tareas Interactivas */}
+      {/* Lista de Tarjetas */}
       <main className="max-w-4xl mx-auto px-4 sm:px-8 mt-6 space-y-5">
         {filteredTasks.map((task) => {
           const isDone = completed.includes(task.id);
@@ -267,7 +401,6 @@ export default function GoldOnboardingGuide() {
               }`}
             >
               <div className="p-5 sm:p-6">
-                {/* Cabecera del ítem */}
                 <div className="flex items-start gap-4">
                   <button
                     onClick={() => toggleTask(task.id)}
@@ -305,7 +438,7 @@ export default function GoldOnboardingGuide() {
                       {task.title}
                     </h2>
 
-                    {/* Explicación en lenguaje simple */}
+                    {/* Explicación Feynman */}
                     <div className="mt-3 text-xs sm:text-sm text-slate-300 leading-relaxed bg-slate-950/60 p-3.5 rounded-xl border border-slate-800/80">
                       <span className="text-amber-400 font-bold block mb-1 text-[11px] uppercase tracking-wider">
                         💡 ¿Qué significa esto en simple?
@@ -313,7 +446,7 @@ export default function GoldOnboardingGuide() {
                       {task.feynmanConcept}
                     </div>
 
-                    {/* Alerta si aplica */}
+                    {/* Advertencia si aplica */}
                     {task.warning && !isDone && (
                       <div className="mt-3 text-xs text-rose-300 bg-rose-950/20 border border-rose-900/50 p-3 rounded-lg flex items-center gap-2">
                         <span>⚠️</span>
@@ -321,7 +454,7 @@ export default function GoldOnboardingGuide() {
                       </div>
                     )}
 
-                    {/* Acción Requerida */}
+                    {/* Acción requerida */}
                     <div className="mt-3 text-xs sm:text-sm text-slate-300">
                       <strong className="text-slate-200">Acción:</strong> {task.action}
                     </div>
@@ -349,17 +482,14 @@ export default function GoldOnboardingGuide() {
           );
         })}
 
-        {/* Tarjeta de Felicitación al completar el 100% */}
+        {/* Felicitación al completar el 100% */}
         {progressPercent === 100 && (
           <div className="p-8 rounded-2xl bg-gradient-to-br from-amber-500/20 via-slate-900 to-slate-900 border border-amber-500/40 text-center space-y-3 shadow-2xl">
             <span className="text-4xl block">🚀</span>
-            <h2 className="text-2xl font-bold text-amber-400">¡Onboarding Oficialmente Completado!</h2>
+            <h2 className="text-2xl font-bold text-amber-400">¡Onboarding y Ecosistema 100% Configurado!</h2>
             <p className="text-sm text-slate-300 max-w-lg mx-auto">
-              Has cubierto todos los pasos técnicos y operativos para pertenecer formalmente a la{" "}
-              <strong className="text-white">Organización GOLD by Virginia Restrepo</strong> en eXp Realty.
-            </p>
-            <p className="text-xs text-amber-300/80 font-medium">
-              Tu siguiente paso es asistir a la próxima reunión semanal de inducción y estrategia de equipo.
+              Has completado todas las etapas de acreditación, activado tus plataformas financieras, tu presencia en el campus 3D y tu plan de capacitaciones en la{" "}
+              <strong className="text-white">Organización GOLD by Virginia Restrepo</strong>.
             </p>
           </div>
         )}
